@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 function Filter({ filterChange }) {
   // const contactList = useSelector(state => state.contacts);
