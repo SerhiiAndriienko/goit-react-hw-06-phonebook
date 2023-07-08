@@ -3,14 +3,13 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 import { useSelector } from 'react-redux';
+import { getContactList } from 'redux/contactListSlice/contactListSlice';
 
 export default function ContactForm({ handleValueChange }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contactList = useSelector(state => state.contacts.contacts);
-  // const filterContacts = useSelector(state => state.filter);
-
+  const contactList = useSelector(getContactList);
   const handleChange = e => {
     if (e.target.name === 'name') {
       setName(e.target.value);

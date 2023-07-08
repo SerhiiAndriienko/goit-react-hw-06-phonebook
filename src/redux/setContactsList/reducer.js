@@ -11,6 +11,7 @@ export const contactsReducer = createReducer(contactsState, {
     contacts: action.payload,
   }),
 });
+
 // const contactsState = {
 //   contacts: [],
 // };

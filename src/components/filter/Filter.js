@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-// import { useDispatch } from 'react-redux';
-
+import { getFilters } from 'redux/filterSlice/filterSlice';
 function Filter({ filterChange }) {
-  // const contactList = useSelector(state => state.contacts);
-  const filterContacts = useSelector(state => state.filter.filter);
+  const filterContacts = useSelector(getFilters);
   const handleFilterChange = event => {
     filterChange(event.target.value);
   };

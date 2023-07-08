@@ -1,51 +1,29 @@
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { getContactList } from 'redux/contactListSlice/contactListSlice';
+import { getFilters } from 'redux/filterSlice/filterSlice';
 
 function ContactList({ onDeleteContact }) {
-  const contactList = useSelector(state => state.contacts.contacts);
-  const filterContacts = useSelector(state => state.filter.filter);
-  useEffect(() => {
-    if (contactList !== undefined && contactList.length > 0) {
-      localStorage.setItem('contacts', JSON.stringify(contactList));
-    }
-  }, [contactList]);
+  const filterContacts = useSelector(getFilters);
+  const contactList = useSelector(getContactList);
 
   return (
     <ul>
-      {contactList[0] === undefined ? (
-        <span
-          style={{
-            fontStyle: 'Italic',
-            textAlign: 'center',
-            display: 'block',
-          }}
-        >
-          Your phonebook is empty
-        </span>
-      ) : filterContacts === '' ? (
-        contactList.map(contact => (
-          <li key={contact.id}>
-            <span>
-              {contact.name}: {contact.number}
-            </span>
-            <button
-              onClick={() => {
-                onDeleteContact(contact.id);
+      {(() => {
+        if (contactList[0] === undefined) {
+          return (
+            <span
+              style={{
+                fontStyle: 'italic',
+                textAlign: 'center',
+                display: 'block',
               }}
             >
-              Delete
-            </button>
-          </li>
-        ))
-      ) : (
-        contactList
-          .filter(contact => {
-            return contact.name
-              .toLowerCase()
-              .includes(filterContacts.toLowerCase());
-          })
-          .map(contact => (
+              Your phonebook is empty
+            </span>
+          );
+        } else if (filterContacts === '') {
+          return contactList.map(contact => (
             <li key={contact.id}>
               <span>
                 {contact.name}: {contact.number}
@@ -58,8 +36,28 @@ function ContactList({ onDeleteContact }) {
                 Delete
               </button>
             </li>
-          ))
-      )}
+          ));
+        } else {
+          return contactList
+            .filter(contact =>
+              contact.name.toLowerCase().includes(filterContacts.toLowerCase())
+            )
+            .map(contact => (
+              <li key={contact.id}>
+                <span>
+                  {contact.name}: {contact.number}
+                </span>
+                <button
+                  onClick={() => {
+                    onDeleteContact(contact.id);
+                  }}
+                >
+                  Delete
+                </button>
+              </li>
+            ));
+        }
+      })()}
     </ul>
   );
 }
