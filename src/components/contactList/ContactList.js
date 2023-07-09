@@ -20,21 +20,6 @@ function ContactList({ onDeleteContact }) {
           Your phonebook is empty
         </span>
       )}
-      {filterContacts === '' ??
-        contactList.map(contact => (
-          <li key={contact.id}>
-            <span>
-              {contact.name}: {contact.number}
-            </span>
-            <button
-              onClick={() => {
-                onDeleteContact(contact.id);
-              }}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
       {contactList
         .filter(contact =>
           contact.name.toLowerCase().includes(filterContacts.toLowerCase())
